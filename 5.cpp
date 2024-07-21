@@ -1,63 +1,49 @@
+/*
+Write a program in CPP to find the “sum” of two objects of type 'time' with members – hour,
+minute and second using the OOP concept. In the main function, “sum” function should be
+invoked as object1.sum(object2,object3) as well as object1.sum(object2). (NOTE: DO NOT
+RETURN OBJECT FOR THIS TASK)S
+*/
+
 #include <iostream>
-using namespace std;
 
-class Time {
-    private:
-        int hour;
-        int minute;
-        int second;
+class Time
+{
+    int hour, minute, second;
 
-    public:
-        // Constructor
-        Time(int h = 0, int m = 0, int s = 0) : hour(h), minute(m), second(s) {}
-
-        // Display time
-        void display() {
-            cout << hour << " hour(s) " << minute << " minute(s) " << second << " second(s)" << endl;
-        }
-
-        // Sum of two times
-        void sum(const Time& t1, Time& result) {
-            int totalSeconds = second + t1.second;
-            int carryMinutes = totalSeconds / 60;
-            totalSeconds %= 60;
-            int totalMinutes = minute + t1.minute + carryMinutes;
-            int carryHours = totalMinutes / 60;
-            totalMinutes %= 60;
-            int totalHours = hour + t1.hour + carryHours;
-            result.hour = totalHours % 24;
-            result.minute = totalMinutes;
-            result.second = totalSeconds;
-        }
-
-        // Sum of two times (overloaded)
-        void sum(const Time& t1) {
-            Time result;
-            sum(t1, result);
-            display();
-            cout << " + ";
-            t1.display();
-            cout << " = ";
-            result.display();
-        }
+public:
+    Time(int h, int m, int s)
+    {
+        hour = h;
+        minute = m;
+        second = s;
+    }
+    void sum(Time t1, Time t2)
+    {
+        hour = t1.hour + t2.hour;
+        minute = t1.minute + t2.minute;
+        second = t1.second + t2.second;
+    }
+    void sum(Time t)
+    {
+        hour += t.hour;
+        minute += t.minute;
+        second += t.second;
+    }
+    void display()
+    {
+        std::cout << "Time: " << hour << " hours, " << minute << " minutes, " << second << " seconds" << std::endl;
+    }
 };
 
-int main() {
-    Time t1(2, 30, 0);
-    Time t2(1, 45, 0);
-    Time t3;
-
-    cout << "Time 1: ";
-    t1.display();
-    cout << "Time 2: ";
-    t2.display();
-
+int main()
+{
+    Time t1(1, 2, 3);
+    Time t2(4, 5, 6);
+    Time t3(7, 8, 9);
     t1.sum(t2, t3);
-    cout << "Sum: ";
-    t3.display();
-
-    cout << "Sum using overloaded function: ";
+    t1.display();
     t1.sum(t2);
-
+    t1.display();
     return 0;
 }
